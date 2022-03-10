@@ -1,8 +1,9 @@
 # SwiftHttpClient
 
 A simple, light-weight library to make requests using URLSession and Encoder/Decoder.
+Only available via Swift Package Manager
 
-## Instatiating the library
+## Instantiating the library
 ```
 let client = HttpClient.Builder()
     .setBaseUrl(url: "http://localhost")
