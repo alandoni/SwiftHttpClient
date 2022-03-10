@@ -4,7 +4,7 @@ A simple, light-weight library to make requests using URLSession and Encoder/Dec
 Only available via Swift Package Manager
 
 ## Instantiating the library
-```
+```swift
 let client = HttpClient.Builder()
     .setBaseUrl(url: "http://localhost")
     .setEncoder(encoder: JSONEncoder())
@@ -16,7 +16,7 @@ let client = HttpClient.Builder()
 
 ### Defining the input and output models:
 
-```
+```swift
 import Foundation
 
 struct Login: Codable {
@@ -33,7 +33,7 @@ struct LoginResponse: Codable {
 
 ### Defining the request:
 
-```
+```swift
 struct LoginRequest: RequestDescriptor {
     var responseType = LoginResponse.self
     var method: Method = .post
@@ -50,7 +50,7 @@ struct LoginRequest: RequestDescriptor {
 ### Calling the client:
 
 #### Using callback:
-```
+```swift
 client.makeRequest(api: LoginRequest(login: login)) { response, error in
     // handle the response as LoginResponse object
     print(response.displayName)
@@ -58,7 +58,7 @@ client.makeRequest(api: LoginRequest(login: login)) { response, error in
 ```
 
 #### Using Combine:
-```
+```swift
 client.makeRequest(api: LoginRequest(login: login))
     .subscribe(on: DispatchQueue.global())
     .receive(on: DispatchQueue.main)
@@ -69,7 +69,7 @@ client.makeRequest(api: LoginRequest(login: login))
 ```
 
 #### Using Async/Await:
-```
+```swift
 let response = try await client.makeRequest(api: LoginRequest(login: login))
 // handle the response as LoginResponse object
 print(response.displayName)
