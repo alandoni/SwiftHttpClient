@@ -2,7 +2,7 @@ public protocol RequestDescriptor {
     associatedtype Request: Codable
     associatedtype Response: Codable
     
-    var method: Method { get }
+    var method: HttpMethod { get }
     var url: String { get }
     var body: Request? { get }
     var responseType: Response.Type { get }
@@ -10,12 +10,12 @@ public protocol RequestDescriptor {
 }
 
 extension RequestDescriptor {
-    var method: Method { .get }
+    var method: HttpMethod { .get }
     var body: Request? { nil }
     var headers: [String: String]? { nil }
 }
 
-public enum Method {
+public enum HttpMethod {
     case post
     case get
     case put
