@@ -1,9 +1,9 @@
 import Foundation
 
-class HttpError: LocalizedError {
-    let request: URLRequest
-    let response: HTTPURLResponse?
-    let responseData: Data?
+public class HttpError: LocalizedError {
+    public let request: URLRequest
+    public let response: HTTPURLResponse?
+    public let responseData: Data?
 
     init(request: URLRequest,
          response: HTTPURLResponse? = nil,
@@ -13,7 +13,7 @@ class HttpError: LocalizedError {
         self.responseData = responseData
     }
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         get {
             guard let response = responseData,
                   let errorMessage = String(data: response, encoding: .utf8) else {
@@ -23,7 +23,7 @@ class HttpError: LocalizedError {
         }
     }
     
-    var errorCode: Int? {
+    public var errorCode: Int? {
         return response?.statusCode
     }
 }

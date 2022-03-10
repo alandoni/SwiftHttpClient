@@ -1,10 +1,10 @@
 import Foundation
 
-protocol SwiftHttpClientProtocol {
+public protocol SwiftHttpClientProtocol {
     func makeRequest<Api: RequestDescriptor>(api: Api, callback: @escaping (Api.Response?, Error?) -> Void) throws
 }
 
-class SwiftHttpClient: NSObject, SwiftHttpClientProtocol {
+public class SwiftHttpClient: NSObject, SwiftHttpClientProtocol {
     private let url: URL
     private let headers: [String: String]?
     private let decoder: JSONDecoder
@@ -70,7 +70,7 @@ class SwiftHttpClient: NSObject, SwiftHttpClientProtocol {
         self.session.dataTask(with: request, completionHandler: callback).resume()
     }
 
-    func makeRequest<Api: RequestDescriptor>(api: Api, callback: @escaping (Api.Response?, Error?) -> Void) throws {
+    public func makeRequest<Api: RequestDescriptor>(api: Api, callback: @escaping (Api.Response?, Error?) -> Void) throws {
         let request = try self.prepareRequest(api: api)
         self.processRequest(request: request) { (data, response, error) in
             if error != nil {
@@ -90,39 +90,41 @@ class SwiftHttpClient: NSObject, SwiftHttpClientProtocol {
         }
     }
 
-    class Builder {
+    public class Builder {
         private var url: URL!
         private var headers = [String: String]()
         private var interceptors = [HttpClientInterceptorProtocol]()
         private var encoder: JSONEncoder!
         private var decoder: JSONDecoder!
 
-        func setBaseUrl(url: String) -> Builder {
+        public init() { }
+
+        public func setBaseUrl(url: String) -> Builder {
             self.url = URL(string: url)
             return self
         }
 
-        func addHeader(key: String, value: String) -> Builder {
+        public func addHeader(key: String, value: String) -> Builder {
             self.headers[key] = value
             return self
         }
 
-        func addInterceptor(interceptor: HttpClientInterceptorProtocol) -> Builder {
+        public func addInterceptor(interceptor: HttpClientInterceptorProtocol) -> Builder {
             self.interceptors.append(interceptor)
             return self
         }
         
-        func setEncoder(encoder: JSONEncoder) -> Builder {
+        public func setEncoder(encoder: JSONEncoder) -> Builder {
             self.encoder = encoder
             return self
         }
         
-        func setDecoder(decoder: JSONDecoder) -> Builder {
+        public func setDecoder(decoder: JSONDecoder) -> Builder {
             self.decoder = decoder
             return self
         }
 
-        func build() -> SwiftHttpClient {
+        public func build() -> SwiftHttpClient {
             return SwiftHttpClient(
                 url: self.url,
                 headers: self.headers,

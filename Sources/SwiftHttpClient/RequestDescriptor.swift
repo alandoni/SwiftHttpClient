@@ -1,4 +1,4 @@
-protocol RequestDescriptor {
+public protocol RequestDescriptor {
     associatedtype Request: Codable
     associatedtype Response: Codable
     
@@ -15,7 +15,7 @@ extension RequestDescriptor {
     var headers: [String: String]? { nil }
 }
 
-enum Method {
+public enum Method {
     case post
     case get
     case put
